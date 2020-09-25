@@ -24,13 +24,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.concurrent.Executor;
-
-public class nav_bar_main_menu extends AppCompatActivity implements onTaskCompletion {
+public class nav_bar_main_menu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     GoogleSignInAccount acct;
-    MenuItem item;
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -57,21 +54,27 @@ public class nav_bar_main_menu extends AppCompatActivity implements onTaskComple
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            settingAccountName(personName);
+        Intent intent = getIntent();
+        String user_name = intent.getStringExtra("emailId");
+        if (user_name!=null)
+        {
+            settingAccountName(user_name);
         }
         else
         {
-            Intent intent = getIntent();
-            String user_name = intent.getStringExtra("emailId");
-            new userNameRetrival(user_name).execute();
+            acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (acct != null)
+            {
+                String personName = acct.getDisplayName();
+                String personGivenName = acct.getGivenName();
+                String personFamilyName = acct.getFamilyName();
+                String personEmail = acct.getEmail();
+                settingAccountName(personEmail);
+            }
+
         }
     }
+
     public void settingAccountName(String userName)
     {
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -81,10 +84,6 @@ public class nav_bar_main_menu extends AppCompatActivity implements onTaskComple
 
     }
 
-    public void onTaskCompleted(String userName)
-    {
-        settingAccountName(userName);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

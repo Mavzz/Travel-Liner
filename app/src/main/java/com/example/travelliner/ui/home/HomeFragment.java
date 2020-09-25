@@ -49,9 +49,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     onTaskCompletion mCompletion;
     View root;
-    Button logOut;
-    GoogleSignInClient mGoogleSignInClient;
-
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -221,7 +218,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             try
             {
                 String country = arg0[0];
-                URL url = new URL("http://192.168.1.243:8080/scripts/flightRetrival.php");
+                URL url = new URL("http://192.168.108.1:8080/scripts/flightRetrival.php");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setDoOutput(true);
                 Uri.Builder builder = new Uri.Builder()
