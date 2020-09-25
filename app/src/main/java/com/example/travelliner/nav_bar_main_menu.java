@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,13 +19,19 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.concurrent.Executor;
 
 public class nav_bar_main_menu extends AppCompatActivity implements onTaskCompletion {
 
     private AppBarConfiguration mAppBarConfiguration;
     GoogleSignInAccount acct;
     MenuItem item;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,12 @@ public class nav_bar_main_menu extends AppCompatActivity implements onTaskComple
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personName = acct.getDisplayName();
@@ -56,7 +69,7 @@ public class nav_bar_main_menu extends AppCompatActivity implements onTaskComple
         {
             Intent intent = getIntent();
             String user_name = intent.getStringExtra("emailId");
-            new userNameRetrival(user_name);
+            new userNameRetrival(user_name).execute();
         }
     }
     public void settingAccountName(String userName)
@@ -88,17 +101,32 @@ public class nav_bar_main_menu extends AppCompatActivity implements onTaskComple
 
     public void logout(MenuItem item){
         try {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (acct != null) {
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener( this, new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+            }
+            else
+            {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public void onBackPressed() { }

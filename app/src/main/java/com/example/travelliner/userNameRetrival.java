@@ -21,7 +21,7 @@ class userNameRetrival extends AsyncTask<String, String,String>
 
     public userNameRetrival(String emailId)
     {
-        userNameRetrival.emailId = emailId;
+        this.emailId = emailId;
     }
 
     protected void onPreExecute(){

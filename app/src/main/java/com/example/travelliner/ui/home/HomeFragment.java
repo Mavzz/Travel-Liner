@@ -1,6 +1,7 @@
 package com.example.travelliner.ui.home;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,7 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.example.travelliner.MainActivity;
 import com.example.travelliner.R;
+import com.example.travelliner.nav_bar_main_menu;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,12 +43,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, onTaskCompletion {
 
     onTaskCompletion mCompletion;
     View root;
     Button logOut;
+    GoogleSignInClient mGoogleSignInClient;
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,20 +67,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         departureSpinnerFunctionality(root, text);
         arrivalSpinnerFunctionality(root, text);
 
-        logOut = logOut.findViewById(R.id.button);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut(v);
-            }
-        });
-
         return root;
-    }
-
-    public void signOut(View view)
-    {
-
     }
     public  void calanderFunctionality(View view)
     {
