@@ -26,6 +26,8 @@
     <string name="arrival">Arrival</string>
     <string name="date">Departure Date</string>
     <string name="arrival_date">Return Date</string>
+    <string name="remeber_me">Remeber Me</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string-array name="country">
         <item>Select a country</item>
         <item>India</item>

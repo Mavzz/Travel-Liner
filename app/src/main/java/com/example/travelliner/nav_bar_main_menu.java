@@ -71,7 +71,6 @@ public class nav_bar_main_menu extends AppCompatActivity {
                 String personEmail = acct.getEmail();
                 settingAccountName(personEmail);
             }
-
         }
     }
 
