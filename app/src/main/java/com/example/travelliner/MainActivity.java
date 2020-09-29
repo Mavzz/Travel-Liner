@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     SignInButton signin;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN=0;
+    TextView signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
         //launches the layout page
         emailIdField = findViewById(R.id.editEmailAddress);
         passwordField = findViewById(R.id.editPassword);
-
+        signUp = findViewById(R.id.signUp);
         signin = findViewById(R.id.sign_in_button);
+
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, signUpActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
         context = getApplicationContext();
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -68,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
     }
 
     @Override
