@@ -30,8 +30,7 @@
                 android:autofillHints=""
                 android:hint="@string/enter_your_first_name"
                 android:inputType="textCapWords"
-                android:textColor="#FFFFFF"
-                app:boxBackgroundColor="#FFFFFF" />
+                android:textColor="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -45,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 android:hint="@string/enter_your_last_name"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:textColor="#FFFFFF"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 android:hint="@string/enter_a_username"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:textColor="#FFFFFF"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Email Label -->
@@ -74,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email_Id"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:textColor="#FFFFFF"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Label -->
@@ -89,7 +91,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password"
-            android:autofillHints="" />
+            android:autofillHints=""
+            android:textColor="#FFFFFF"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -103,7 +106,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/enter_password_again"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:textColor="#FFFFFF"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
