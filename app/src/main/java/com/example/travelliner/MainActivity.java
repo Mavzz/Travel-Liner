@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.editPassword);
         signUp = findViewById(R.id.signUp);
         signin = findViewById(R.id.sign_in_button);
+        context = getApplicationContext();
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, signUpActivity.class);
+                Intent intent = new Intent(MainActivity.this, signUpActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                startActivity(intent);
             }
         });
-        context = getApplicationContext();
+
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
