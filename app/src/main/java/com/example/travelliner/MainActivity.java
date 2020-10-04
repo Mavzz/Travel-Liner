@@ -23,6 +23,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText emailIdField,passwordField;
@@ -118,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view){
         String emailId = emailIdField.getText().toString();
         String password = passwordField.getText().toString();
-        new SigninActivity(emailId,context).execute(emailId , password);
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+
+        if (pattern.matcher(emailId).matches())
+        {
+            new SigninActivity(emailId,context).execute(emailId , password);
+        }
+        else
+        {
+            Toast.makeText(context,"Email Format entered is wrong",Toast.LENGTH_SHORT).show();
+        }
     }
 }
