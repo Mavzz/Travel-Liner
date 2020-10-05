@@ -77,7 +77,7 @@ public class signUpActivity extends AppCompatActivity {
             {
                 if (pattern.matcher(emailid).matches())
                 {
-                    new mysqlSaveActivity(context).execute(firstname, lastname, username, emailid, passwd, birthdate);
+                    new mysqlSaveActivity(context, true).execute(firstname, lastname, username, emailid, passwd, birthdate);
                 }
                 else
                 {

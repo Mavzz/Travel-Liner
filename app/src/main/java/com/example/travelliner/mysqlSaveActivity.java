@@ -24,11 +24,12 @@ public class mysqlSaveActivity extends AsyncTask<String,String,String> {
 
     @SuppressLint("StaticFieldLeak")
     private Context context;
-    public static String emailid;
+    boolean flag;
 
-    public mysqlSaveActivity(Context context)
+    public mysqlSaveActivity(Context context, boolean flag)
     {
         this.context = context;
+        this.flag = flag;
     }
 
     protected void onPreExecute(){
@@ -37,36 +38,65 @@ public class mysqlSaveActivity extends AsyncTask<String,String,String> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected String doInBackground(String... arg0) {
         HttpURLConnection conn;
-        String firstname = arg0[0];
-        String lastname = arg0[1];
-        String username = arg0[2];
-        String emailid = arg0[3];
-        String passwd = arg0[4];
-        String birthdate = arg0[5];
-
             try
             {
-                URL url = new URL("http://192.168.108.1:8080/scripts/saveUser.php");
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoOutput(true);
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("first_name", firstname)
-                        .appendQueryParameter("last_name", lastname)
-                        .appendQueryParameter("user_name", username)
-                        .appendQueryParameter("emailid", emailid)
-                        .appendQueryParameter("password", passwd)
-                        .appendQueryParameter("birth_date", birthdate);
+                if (flag)
+                {
+                    String firstname = arg0[0];
+                    String lastname = arg0[1];
+                    String username = arg0[2];
+                    String emailid = arg0[3];
+                    String passwd = arg0[4];
+                    String birthdate = arg0[5];
 
-                String query = builder.build().getEncodedQuery();
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, StandardCharsets.UTF_8));
+                    URL url = new URL("http://192.168.108.1:8080/scripts/saveUser.php");
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    Uri.Builder builder = new Uri.Builder()
+                            .appendQueryParameter("first_name", firstname)
+                            .appendQueryParameter("last_name", lastname)
+                            .appendQueryParameter("user_name", username)
+                            .appendQueryParameter("emailid", emailid)
+                            .appendQueryParameter("password", passwd)
+                            .appendQueryParameter("birth_date", birthdate);
 
-                writer.write( query );
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
+                    String query = builder.build().getEncodedQuery();
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, StandardCharsets.UTF_8));
+
+                    writer.write( query );
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                    conn.connect();
+                }
+                else
+                {
+                    String id = arg0[0];
+                    String emailid = arg0[1];
+                    String username = arg0[2];
+
+                    URL url = new URL("http://192.168.108.1:8080/scripts/saveUserGoogle.php");
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    Uri.Builder builder = new Uri.Builder()
+                            .appendQueryParameter("id", id)
+                            .appendQueryParameter("emailid", emailid)
+                            .appendQueryParameter("user_name", username);
+
+                    String query = builder.build().getEncodedQuery();
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, StandardCharsets.UTF_8));
+
+                    writer.write( query );
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                    conn.connect();
+                }
+
             }
             catch(Exception e)
             {
@@ -105,26 +135,21 @@ public class mysqlSaveActivity extends AsyncTask<String,String,String> {
         {
             if (result.equalsIgnoreCase("true"))
             {
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra("emailId",emailid);
+                Intent intent = new Intent(context, nav_bar_main_menu.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
-            else if(result.equalsIgnoreCase(("false")))
+            else if(result.equalsIgnoreCase("Email exists"))
             {
-                Toast.makeText(context,"Invalid email or password",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Email already exists use another email",Toast.LENGTH_SHORT).show();
             }
-            else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful"))
+            else if(result.equalsIgnoreCase("Username exists"))
             {
-                Toast.makeText(context,"Oops something went wrong!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Username already exists use another username",Toast.LENGTH_SHORT).show();
             }
-            else if (result.equalsIgnoreCase("email"))
+            else
             {
-                Toast.makeText(context,"Enter the email address",Toast.LENGTH_SHORT).show();
-            }
-            else if (result.equalsIgnoreCase("password"))
-            {
-                Toast.makeText(context,"Enter password",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show();
             }
         }
         catch(Exception e){

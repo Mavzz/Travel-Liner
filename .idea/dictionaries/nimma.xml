@@ -1,9 +1,13 @@
 <component name="ProjectDictionaryState">
   <dictionary name="nimma">
     <words>
+      <w>birthdate</w>
       <w>calander</w>
       <w>cornerns</w>
       <w>emailid</w>
+      <w>firstname</w>
+      <w>lastname</w>
+      <w>passwd</w>
       <w>remeber</w>
       <w>retrival</w>
       <w>signin</w>

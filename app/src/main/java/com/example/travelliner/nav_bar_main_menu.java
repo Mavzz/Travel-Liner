@@ -20,9 +20,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Set;
 
 public class nav_bar_main_menu extends AppCompatActivity {
 
@@ -65,9 +68,6 @@ public class nav_bar_main_menu extends AppCompatActivity {
             acct = GoogleSignIn.getLastSignedInAccount(this);
             if (acct != null)
             {
-                String personName = acct.getDisplayName();
-                String personGivenName = acct.getGivenName();
-                String personFamilyName = acct.getFamilyName();
                 String personEmail = acct.getEmail();
                 settingAccountName(personEmail);
             }
